@@ -13,7 +13,7 @@ ThisBuild / updateSbtClassifiers / conflictManager := ConflictManager.default
 enablePlugins( FormatPlugin, DependenciesPlugin )
 
 val core = project
-  .settings( libraryDependencies ++= cats ++ catsEffect )
+  .settings( libraryDependencies ++= cats ++ catsEffect ++ fs2 ++ catsParse ++ decline ++ enumeratum )
   .enablePlugins( SbtBuildInfo, ScalacPlugin )
 
 val tests = project
