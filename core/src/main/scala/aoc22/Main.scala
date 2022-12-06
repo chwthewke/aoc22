@@ -2,12 +2,9 @@ package aoc22
 
 import cats.effect.ExitCode
 import cats.effect.IO
-import cats.effect.IOApp
+import com.monovore.decline.Opts
+import com.monovore.decline.effect.CommandIOApp
 
-object Main extends IOApp {
-
-  override def run( args: List[String] ): IO[ExitCode] =
-    IO( println( s"${buildinfo.Aoc22.name} ${buildinfo.Aoc22.version}" ) )
-      .as( ExitCode.Success )
-
+object Main extends CommandIOApp( "aoc2022", "Advent of Code 2022" ) {
+  override def main: Opts[IO[ExitCode]] = Days.program[IO]
 }
