@@ -1,6 +1,9 @@
 package aoc22
 
 import cats.effect.Sync
+import cats.parse.Parser
+import cats.syntax.either._
+import fs2.Pipe
 import fs2.Stream
 import fs2.io.readInputStream
 import fs2.text
@@ -18,5 +21,8 @@ object Data {
 
   def lines[F[_]: Sync]( day: Int, live: Boolean ): Stream[F, String] =
     bytes( day, live ).through( utf8.decode[F] ).through( text.lines[F] )
+
+  def parseLines[F[_]: Sync, A]( lineParser: Parser[A] ): Pipe[F, String, A] =
+    _.evalMap( line => lineParser.parseAll( line ).leftMap( err => Error( s"Error parsing '$line': $err" ) ).liftTo[F] )
 
 }

@@ -20,7 +20,8 @@ trait Day[F[_]] {
 object Days {
 
   def days[F[_]: Sync]: Map[Int, Day[F]] = Map(
-    1 -> new Aoc1[F]
+    1 -> new Aoc1[F],
+    2 -> new Aoc2[F]
   )
 
   private val liveOpt: Opts[Boolean] = Opts.flag( "live", "Use the live data", "l" ).orFalse
