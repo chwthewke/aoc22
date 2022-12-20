@@ -21,19 +21,19 @@ class Aoc5[F[_]: Sync] extends Day[F] {
     Data
       .lines[F]( 5, live )
       .evalScan( ReadingStacks( Nil ): Accumulator )(
-        ( acc, line ) => acc.readLine( line ).leftMap( Error( _ ) ).liftTo[F]
+        ( acc, line ) => acc.readLine( line ).into[F]
       )
       .compile
       .lastOrError
-      .flatMap( _.validate.leftMap( Error( _ ) ).liftTo[F] )
+      .flatMap( _.validate.into[F] )
 
   override def basic( live: Boolean ): F[String] =
     readInstructions( live )
-      .flatMap( instr => instr.evalMoves.leftMap( Error( _ ) ).liftTo[F] )
+      .flatMap( instr => instr.evalMoves.into[F] )
 
   override def bonus( live: Boolean ): F[String] =
     readInstructions( live )
-      .flatMap( instr => instr.evalMovesBonus.leftMap( Error( _ ) ).liftTo[F] )
+      .flatMap( instr => instr.evalMovesBonus.into[F] )
 }
 
 object Aoc5 {

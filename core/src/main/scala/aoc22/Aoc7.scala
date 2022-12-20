@@ -4,7 +4,6 @@ import cats.effect.Sync
 import cats.parse.Numbers
 import cats.parse.Parser
 import cats.syntax.apply._
-import cats.syntax.either._
 import cats.syntax.foldable._
 import cats.syntax.functor._
 
@@ -14,7 +13,7 @@ class Aoc7[F[_]: Sync] extends Day.N[F]( 7 ) {
   private def getFileSystem( live: Boolean ): F[FileSystem] =
     lines( live )
       .through( Data.parseLines( parsers.line ) )
-      .evalScan( Init: Scan )( ( s, line ) => s.readLine( line ).leftMap( Error( _ ) ).liftTo[F] )
+      .evalScan( Init: Scan )( ( s, line ) => s.readLine( line ).into[F] )
       .map( _.fileSystem )
       .compile
       .lastOrError
