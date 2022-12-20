@@ -12,11 +12,28 @@ ThisBuild / updateSbtClassifiers / conflictManager := ConflictManager.default
 
 enablePlugins( FormatPlugin, DependenciesPlugin )
 
+val commonSettings =
+  Seq(
+    libraryDependencies ++= kindProjector ++ betterMonadicFor
+  )
+
 val core = project
-  .settings( libraryDependencies ++= cats ++ mouse ++ catsEffect ++ fs2 ++ catsParse ++ decline ++ enumeratum )
+  .settings( commonSettings )
+  .settings(
+    libraryDependencies ++=
+      cats
+        ++ mouse
+        ++ kittens
+        ++ catsEffect
+        ++ fs2
+        ++ catsParse
+        ++ decline
+        ++ enumeratum
+  )
   .enablePlugins( SbtBuildInfo, ScalacPlugin )
 
 val tests = project
+  .settings( commonSettings )
   .settings( libraryDependencies ++= (scalatest ++ scalacheck).map( _ % "test" ) )
   .dependsOn( core )
   .enablePlugins( ScalacPlugin )
