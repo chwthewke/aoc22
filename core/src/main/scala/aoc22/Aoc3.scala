@@ -5,10 +5,9 @@ import cats.syntax.either._
 import cats.syntax.foldable._
 import cats.syntax.functor._
 import fs2.Chunk
-import fs2.Stream
 import mouse.boolean._
 
-class Aoc3[F[_]: Sync] extends Day[F] {
+class Aoc3[F[_]: Sync] extends Day.N[F]( 3 ) {
   def getPriority( c: Char ): Either[String, Int] =
     priorities.get( c ).toRight( s"Invalid item char $c" )
 
@@ -38,14 +37,8 @@ class Aoc3[F[_]: Sync] extends Day[F] {
       .liftTo[F]
   }
 
-  private def input( live: Boolean ): Stream[F, String] =
-    Data
-      .lines[F]( 3, live )
-      .map( _.trim )
-      .filter( _.nonEmpty )
-
   override def basic( live: Boolean ): F[String] = {
-    input( live )
+    lines( live )
       .evalMap( identifyMispacked )
       .compile
       .foldMonoid
@@ -66,7 +59,7 @@ class Aoc3[F[_]: Sync] extends Day[F] {
   }
 
   override def bonus( live: Boolean ): F[String] =
-    input( live )
+    lines( live )
       .chunkN( 3, allowFewer = true )
       .evalMap( groupBadge )
       .compile

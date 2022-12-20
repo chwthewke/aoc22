@@ -7,13 +7,10 @@ import cats.syntax.functor._
 import enumeratum.Enum
 import enumeratum.EnumEntry
 
-class Aoc2[F[_]: Sync] extends Day[F] {
+class Aoc2[F[_]: Sync] extends Day.N[F]( 2 ) {
 
   private def runWithScoring( live: Boolean, p: Parser[Int] ): F[String] =
-    Data
-      .lines[F]( 2, live )
-      .map( _.trim )
-      .filter( _.nonEmpty )
+    lines( live )
       .through( Data.parseLines( p ) )
       .compile
       .foldMonoid

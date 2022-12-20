@@ -12,17 +12,13 @@ import cats.syntax.monadError._
 import com.monovore.decline.Command
 import com.monovore.decline.Opts
 
-trait Day[F[_]] {
-  def basic( live: Boolean ): F[String]
-  def bonus( live: Boolean ): F[String]
-}
-
 object Days {
 
   def days[F[_]: Sync]: Map[Int, Day[F]] = Map(
     1 -> new Aoc1[F],
     2 -> new Aoc2[F],
-    3 -> new Aoc3[F]
+    3 -> new Aoc3[F],
+    4 -> new Aoc4[F]
   )
 
   private val liveOpt: Opts[Boolean] = Opts.flag( "live", "Use the live data", "l" ).orFalse

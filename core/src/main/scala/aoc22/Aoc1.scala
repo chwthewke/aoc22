@@ -5,12 +5,10 @@ import cats.effect.Sync
 import cats.syntax.show._
 import fs2.Stream
 
-class Aoc1[F[_]: Sync] extends Day[F] {
+class Aoc1[F[_]: Sync] extends Day.N[F]( 1 ) {
 
   private def values( live: Boolean ): Stream[F, Option[Int]] =
-    Data
-      .lines[F]( 1, live )
-      .map( _.trim.toIntOption )
+    lines( live ).map( _.toIntOption )
 
   override def basic( live: Boolean ): F[String] =
     values( live )
