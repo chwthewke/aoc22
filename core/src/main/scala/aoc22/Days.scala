@@ -1,14 +1,15 @@
 package aoc22
 
+import cats.effect.Clock
 import cats.effect.ExitCode
 import cats.effect.Sync
 import cats.effect.std.Console
-import cats.syntax.applicative._
+import cats.syntax.applicativeError._
 import cats.syntax.apply._
 import cats.syntax.flatMap._
 import cats.syntax.foldable._
 import cats.syntax.functor._
-import cats.syntax.monadError._
+import cats.syntax.show._
 import com.monovore.decline.Command
 import com.monovore.decline.Opts
 import scala.collection.immutable.SortedMap
@@ -45,14 +46,24 @@ object Days {
     }.foldK
   }
 
-  def program[F[_]: Sync]: Opts[F[ExitCode]] =
-    ( liveOpt, commands[F] ).mapN( ( live, p ) => handleError( p( live ).flatMap( Console.make[F].println ) ) )
+  def program[F[_]: Sync: Clock]: Opts[F[ExitCode]] =
+    ( liveOpt, commands[F] ).mapN( ( live, p ) => run( p( live ) ) )
 
-  private def handleError[F[_]: Sync]( prog: F[Unit] ): F[ExitCode] = {
-    prog.redeemWith(
-      err => Console.make[F].errorln( err.getMessage ).as( ExitCode.Error ),
-      Function.const( ExitCode.Success.pure[F] )
-    )
+  private def run[F[_]: Sync: Clock]( program: F[String] ): F[ExitCode] = {
+
+    val console: Console[F] = Console.make[F]
+
+    for {
+      s   <- Clock[F].monotonic
+      res <- program.attempt
+      e   <- Clock[F].monotonic
+      _   <- console.errorln( show"[${(e - s).toMillis} ms]" )
+      code <- res.fold(
+               err => console.errorln( err.getMessage ).as( ExitCode.Error ),
+               str => console.println( str ).as( ExitCode.Success )
+             )
+    } yield code
+
   }
 
 }
