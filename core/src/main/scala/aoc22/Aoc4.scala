@@ -5,22 +5,22 @@ import cats.parse.Numbers
 import cats.syntax.apply._
 import cats.syntax.functor._
 
-class Aoc4[F[_]: Sync] extends Day.N[F]( 4 ) {
+class Aoc4[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
   import Aoc4._
 
-  private def readRanges( live: Boolean ): fs2.Stream[F, ( Range, Range )] =
-    lines( live )
-      .through( Data.parseLines( parsers.ranges ) )
+  private def readRanges: fs2.Stream[F, ( Range, Range )] =
+    lines
+      .through( parseLines( parsers.ranges ) )
 
-  override def basic( live: Boolean ): F[String] =
-    readRanges( live )
+  override def basic: F[String] =
+    readRanges
       .map { case ( r1, r2 ) => if (r1.includes( r2 ) || r2.includes( r1 )) 1 else 0 }
       .compile
       .foldMonoid
       .map( _.toString )
 
-  override def bonus( live: Boolean ): F[String] =
-    readRanges( live )
+  override def bonus: F[String] =
+    readRanges
       .map { case ( r1, r2 ) => if (r1.overlaps( r2 )) 1 else 0 }
       .compile
       .foldMonoid

@@ -7,7 +7,7 @@ import cats.syntax.functor._
 import fs2.Chunk
 import mouse.boolean._
 
-class Aoc3[F[_]: Sync] extends Day.N[F]( 3 ) {
+class Aoc3[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
   def getPriority( c: Char ): Either[String, Int] =
     priorities.get( c ).toRight( s"Invalid item char $c" )
 
@@ -37,8 +37,8 @@ class Aoc3[F[_]: Sync] extends Day.N[F]( 3 ) {
       .liftTo[F]
   }
 
-  override def basic( live: Boolean ): F[String] = {
-    lines( live )
+  override def basic: F[String] = {
+    lines
       .evalMap( identifyMispacked )
       .compile
       .foldMonoid
@@ -58,8 +58,8 @@ class Aoc3[F[_]: Sync] extends Day.N[F]( 3 ) {
       .liftTo[F]
   }
 
-  override def bonus( live: Boolean ): F[String] =
-    lines( live )
+  override def bonus: F[String] =
+    lines
       .chunkN( 3, allowFewer = true )
       .evalMap( groupBadge )
       .compile

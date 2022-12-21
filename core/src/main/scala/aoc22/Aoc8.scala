@@ -7,11 +7,11 @@ import cats.syntax.functor._
 import cats.syntax.traverse._
 import scala.annotation.tailrec
 
-class Aoc8[F[_]: Sync] extends Day.N[F]( 8 ) {
+class Aoc8[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
   import Aoc8._
 
-  def getGrid( live: Boolean ): F[Grid] =
-    lines( live )
+  def getGrid: F[Grid] =
+    lines
       .evalScan( GridAccum( None, Vector.empty ) )(
         ( acc, line ) => acc.readLine( line ).into[F]
       )
@@ -19,12 +19,12 @@ class Aoc8[F[_]: Sync] extends Day.N[F]( 8 ) {
       .lastOrError
       .flatMap( acc => acc.validate.into[F] )
 
-  override def basic( live: Boolean ): F[String] =
-    getGrid( live )
+  override def basic: F[String] =
+    getGrid
       .map( _.visibleTrees.toString )
 
-  override def bonus( live: Boolean ): F[String] =
-    getGrid( live )
+  override def bonus: F[String] =
+    getGrid
       .flatMap( _.bestViewDist.into[F] )
       .map( _.toString )
 }

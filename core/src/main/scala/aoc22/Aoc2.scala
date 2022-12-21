@@ -7,20 +7,20 @@ import cats.syntax.functor._
 import enumeratum.Enum
 import enumeratum.EnumEntry
 
-class Aoc2[F[_]: Sync] extends Day.N[F]( 2 ) {
+class Aoc2[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
 
-  private def runWithScoring( live: Boolean, p: Parser[Int] ): F[String] =
-    lines( live )
-      .through( Data.parseLines( p ) )
+  private def runWithScoring( p: Parser[Int] ): F[String] =
+    lines
+      .through( parseLines( p ) )
       .compile
       .foldMonoid
       .map( _.toString )
 
-  override def basic( live: Boolean ): F[String] =
-    runWithScoring( live, Aoc2.parsers.score )
+  override def basic: F[String] =
+    runWithScoring( Aoc2.parsers.score )
 
-  override def bonus( live: Boolean ): F[String] =
-    runWithScoring( live, Aoc2.parsers.realScore )
+  override def bonus: F[String] =
+    runWithScoring( Aoc2.parsers.realScore )
 }
 
 object Aoc2 {

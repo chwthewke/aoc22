@@ -7,19 +7,19 @@ import cats.syntax.apply._
 import cats.syntax.foldable._
 import cats.syntax.functor._
 
-class Aoc7[F[_]: Sync] extends Day.N[F]( 7 ) {
+class Aoc7[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
   import Aoc7._
 
-  private def getFileSystem( live: Boolean ): F[FileSystem] =
-    lines( live )
-      .through( Data.parseLines( parsers.line ) )
+  private def getFileSystem: F[FileSystem] =
+    lines
+      .through( parseLines( parsers.line ) )
       .evalScan( Init: Scan )( ( s, line ) => s.readLine( line ).into[F] )
       .map( _.fileSystem )
       .compile
       .lastOrError
 
-  override def basic( live: Boolean ): F[String] =
-    getFileSystem( live ).map(
+  override def basic: F[String] =
+    getFileSystem.map(
       fs =>
         smallDirectories( fs, 100000L )
           .foldMap( _._2 )
@@ -29,8 +29,8 @@ class Aoc7[F[_]: Sync] extends Day.N[F]( 7 ) {
   def smallDirectories( fileSystem: FileSystem, limit: Long ): Vector[( List[String], Long )] =
     fileSystem.dirSizes.filter { case ( _, sz ) => sz <= limit }.toVector
 
-  override def bonus( live: Boolean ): F[String] =
-    getFileSystem( live ).map(
+  override def bonus: F[String] =
+    getFileSystem.map(
       fs => directoryToDelete( fs, 70000000L, 30000000L )._2.toString
     )
 

@@ -14,12 +14,11 @@ import cats.syntax.functorFilter._
 import cats.syntax.flatMap._
 import cats.syntax.option._
 
-class Aoc5[F[_]: Sync] extends Day[F] {
+class Aoc5[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
   import Aoc5._
 
-  private def readInstructions( live: Boolean ): F[Instructions] =
-    Data
-      .lines[F]( 5, live )
+  private def readInstructions: F[Instructions] =
+    rawLines
       .evalScan( ReadingStacks( Nil ): Accumulator )(
         ( acc, line ) => acc.readLine( line ).into[F]
       )
@@ -27,12 +26,12 @@ class Aoc5[F[_]: Sync] extends Day[F] {
       .lastOrError
       .flatMap( _.validate.into[F] )
 
-  override def basic( live: Boolean ): F[String] =
-    readInstructions( live )
+  override def basic: F[String] =
+    readInstructions
       .flatMap( instr => instr.evalMoves.into[F] )
 
-  override def bonus( live: Boolean ): F[String] =
-    readInstructions( live )
+  override def bonus: F[String] =
+    readInstructions
       .flatMap( instr => instr.evalMovesBonus.into[F] )
 }
 
@@ -104,7 +103,7 @@ object Aoc5 {
           case Right( crateLine ) => ReadingStacks( crateLine :: stackLines )
         }
         .parseAll( str )
-        .leftMap( Data.formatError( str, _ ) )
+        .leftMap( formatError( str, _ ) )
   }
 
   case class ReadStacks( stacks: Vector[List[Crate]] ) extends Accumulator {
@@ -121,7 +120,7 @@ object Aoc5 {
       else
         parsers.moveLine
           .parseAll( str )
-          .leftMap( Data.formatError( str, _ ) )
+          .leftMap( formatError( str, _ ) )
           .map( move => ReadingMoves( stacks, move :: moves ) )
 
     override def validate: Either[String, Instructions] =
