@@ -69,7 +69,8 @@ object Days {
     Desc( 10, new Aoc10[F]( _ ) ),
     Desc( 11, new Aoc11[F]( _ ) ),
     Desc( 12, new Aoc12[F]( _ ) ),
-    Desc( 13, new Aoc13[F]( _ ) )
+    Desc( 13, new Aoc13[F]( _ ) ),
+    Desc( 14, new Aoc14[F]( _ ) )
   )
 
   private val liveOpt: Opts[Boolean] = Opts.flag( "live", "Use the live data", "l" ).orFalse
