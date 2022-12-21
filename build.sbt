@@ -14,7 +14,8 @@ enablePlugins( FormatPlugin, DependenciesPlugin )
 
 val commonSettings =
   Seq(
-    libraryDependencies ++= kindProjector ++ betterMonadicFor
+    libraryDependencies ++= kindProjector ++ betterMonadicFor,
+    run / fork := true
   )
 
 val core = project
