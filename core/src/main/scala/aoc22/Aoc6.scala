@@ -3,7 +3,7 @@ package aoc22
 import cats.effect.Sync
 import cats.syntax.all._
 
-class Aoc6[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
+class Aoc6[F[_]: Sync]( srcFile: String, live: Boolean ) extends Day.Of[F]( srcFile, live ) {
   def uniquePacket( signal: String, from: Int, window: Int ): Option[Int] =
     ((from + window) to signal.length)
       .find( x => signal.substring( x - window, x ).toSet.size == window )

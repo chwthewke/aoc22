@@ -5,7 +5,7 @@ import cats.syntax.all._
 import fs2.Chunk
 import mouse.boolean._
 
-class Aoc3[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
+class Aoc3[F[_]: Sync]( srcFile: String, live: Boolean ) extends Day.Of[F]( srcFile, live ) {
   def getPriority( c: Char ): Either[String, Int] =
     priorities.get( c ).toRight( s"Invalid item char $c" )
 

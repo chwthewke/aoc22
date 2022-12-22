@@ -7,7 +7,7 @@ import cats.parse.Parser
 import cats.syntax.all._
 import fs2.Chunk
 
-class Aoc13[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
+class Aoc13[F[_]: Sync]( srcFile: String, live: Boolean ) extends Day.Of[F]( srcFile, live ) {
   import Aoc13._
 
   private def parsePacket( chunk: Chunk[String], ix: Int ): Either[String, Packet] =

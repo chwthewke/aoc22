@@ -5,7 +5,7 @@ import cats.parse.Numbers
 import cats.parse.Parser
 import cats.syntax.all._
 
-class Aoc7[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
+class Aoc7[F[_]: Sync]( srcFile: String, live: Boolean ) extends Day.Of[F]( srcFile, live ) {
   import Aoc7._
 
   private def getFileSystem: F[FileSystem] =

@@ -6,7 +6,7 @@ import cats.syntax.all._
 import enumeratum.Enum
 import enumeratum.EnumEntry
 
-class Aoc2[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
+class Aoc2[F[_]: Sync]( srcFile: String, live: Boolean ) extends Day.Of[F]( srcFile, live ) {
 
   private def runWithScoring( p: Parser[Int] ): F[String] =
     lines

@@ -4,7 +4,7 @@ import cats.effect.Sync
 import cats.parse.Numbers
 import cats.syntax.all._
 
-class Aoc4[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
+class Aoc4[F[_]: Sync]( srcFile: String, live: Boolean ) extends Day.Of[F]( srcFile, live ) {
   import Aoc4._
 
   private def readRanges: fs2.Stream[F, ( Range, Range )] =

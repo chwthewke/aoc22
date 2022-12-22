@@ -10,7 +10,7 @@ import enumeratum.Enum
 import enumeratum.EnumEntry
 import scala.annotation.tailrec
 
-class Aoc11[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
+class Aoc11[F[_]: Sync]( srcFile: String, live: Boolean ) extends Day.Of[F]( srcFile, live ) {
   import Aoc11._
 
   def getMonkeys: F[Monkeys[Int]] =

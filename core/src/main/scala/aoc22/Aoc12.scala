@@ -4,7 +4,7 @@ import cats.effect.Sync
 import cats.syntax.all._
 import scala.annotation.tailrec
 
-class Aoc12[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
+class Aoc12[F[_]: Sync]( srcFile: String, live: Boolean ) extends Day.Of[F]( srcFile, live ) {
   import Aoc12._
   def getGrid: F[Grid] =
     lines

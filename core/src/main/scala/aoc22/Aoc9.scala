@@ -9,7 +9,7 @@ import enumeratum.Enum
 import enumeratum.EnumEntry
 import fs2.Stream
 
-class Aoc9[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
+class Aoc9[F[_]: Sync]( srcFile: String, live: Boolean ) extends Day.Of[F]( srcFile, live ) {
   import Aoc9._
 
   def getDirections: Stream[F, Direction] =

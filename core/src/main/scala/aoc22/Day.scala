@@ -15,7 +15,7 @@ trait Day[F[_]] {
 }
 
 object Day {
-  abstract class Of[F[_]: Sync]( srcFile: String ) extends Day[F] {
+  abstract class Of[F[_]: Sync]( srcFile: String, live: Boolean ) extends Day[F] {
 
     final def parseLines[A]( lineParser: Parser[A] ): Pipe[F, String, A] =
       _.evalMap( line => lineParser.parseAll( line ).leftMap( err => Error( formatError( line, err ) ) ).liftTo[F] )

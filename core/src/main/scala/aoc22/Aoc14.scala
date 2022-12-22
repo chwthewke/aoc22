@@ -11,7 +11,7 @@ import enumeratum.Enum
 import enumeratum.EnumEntry
 import scala.annotation.tailrec
 
-class Aoc14[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
+class Aoc14[F[_]: Sync]( srcFile: String, live: Boolean ) extends Day.Of[F]( srcFile, live ) {
   import Aoc14._
 
   def getPaths: F[NonEmptyVector[Path]] =

@@ -5,7 +5,7 @@ import cats.effect.Sync
 import cats.syntax.all._
 import fs2.Stream
 
-class Aoc1[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
+class Aoc1[F[_]: Sync]( srcFile: String, live: Boolean ) extends Day.Of[F]( srcFile, live ) {
 
   private def values: Stream[F, Option[Int]] =
     lines.map( _.toIntOption )

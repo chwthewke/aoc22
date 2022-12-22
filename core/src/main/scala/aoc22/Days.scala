@@ -12,7 +12,7 @@ object Days {
 
   class Desc[F[_]](
       val dayNum: Int,
-      val day: String => Day[F]
+      val day: (String, Boolean) => Day[F]
   ) {
 
     protected def resource( live: Boolean, alt: Boolean ): String = {
@@ -22,7 +22,7 @@ object Days {
     }
 
     def run( alt: Boolean ): Boolean => Day[F] =
-      (live: Boolean) => day( resource( live, alt ) )
+      (live: Boolean) => day( resource( live, alt ), live )
 
     protected def mkCommand( cmd: String, help: String ): Opts[Boolean => Day[F]] =
       Opts
@@ -41,8 +41,7 @@ object Days {
       basicCommand <+> bonusCommand
   }
 
-  class DescAlt[F[_]]( dayNum0: Int, day0: String => Day[F] ) extends Desc[F]( dayNum0, day0 ) {
-
+  class DescAlt[F[_]]( dayNum0: Int, day0: (String, Boolean) => Day[F] ) extends Desc[F]( dayNum0, day0 ) {
     override protected def mkCommand( cmd: String, help: String ): Opts[Boolean => Day[F]] =
       Opts
         .subcommand( Command( cmd, help )( altOpt ) )
@@ -50,27 +49,27 @@ object Days {
   }
 
   object Desc {
-    def apply[F[_]]( dayNum: Int, mkDay: String => Day[F] ): Desc[F] =
+    def apply[F[_]]( dayNum: Int, mkDay: (String, Boolean) => Day[F] ): Desc[F] =
       new Desc( dayNum, mkDay )
-    def alt[F[_]]( dayNum: Int, mkDay: String => Day[F] ): Desc[F] =
+    def alt[F[_]]( dayNum: Int, mkDay: (String, Boolean) => Day[F] ): Desc[F] =
       new DescAlt[F]( dayNum, mkDay )
   }
 
   def days[F[_]: Sync]: Vector[Desc[F]] = Vector(
-    Desc( 1, new Aoc1[F]( _ ) ),
-    Desc( 2, new Aoc2[F]( _ ) ),
-    Desc( 3, new Aoc3[F]( _ ) ),
-    Desc( 4, new Aoc4[F]( _ ) ),
-    Desc( 5, new Aoc5[F]( _ ) ),
-    Desc( 6, new Aoc6[F]( _ ) ),
-    Desc( 7, new Aoc7[F]( _ ) ),
-    Desc( 8, new Aoc8[F]( _ ) ),
-    Desc.alt( 9, new Aoc9[F]( _ ) ),
-    Desc( 10, new Aoc10[F]( _ ) ),
-    Desc( 11, new Aoc11[F]( _ ) ),
-    Desc( 12, new Aoc12[F]( _ ) ),
-    Desc( 13, new Aoc13[F]( _ ) ),
-    Desc( 14, new Aoc14[F]( _ ) )
+    Desc( 1, new Aoc1[F]( _, _ ) ),
+    Desc( 2, new Aoc2[F]( _, _ ) ),
+    Desc( 3, new Aoc3[F]( _, _ ) ),
+    Desc( 4, new Aoc4[F]( _ , _) ),
+    Desc( 5, new Aoc5[F]( _ , _) ),
+    Desc( 6, new Aoc6[F]( _ , _) ),
+    Desc( 7, new Aoc7[F]( _ , _) ),
+    Desc( 8, new Aoc8[F]( _ , _) ),
+    Desc.alt( 9, new Aoc9[F]( _, _ ) ),
+    Desc( 10, new Aoc10[F]( _ , _) ),
+    Desc( 11, new Aoc11[F]( _ , _) ),
+    Desc( 12, new Aoc12[F]( _ , _) ),
+    Desc( 13, new Aoc13[F]( _ , _) ),
+    Desc( 14, new Aoc14[F]( _ , _) )
   )
 
   private val liveOpt: Opts[Boolean] = Opts.flag( "live", "Use the live data", "l" ).orFalse

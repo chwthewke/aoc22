@@ -5,7 +5,7 @@ import cats.parse.Parser
 import cats.syntax.all._
 import fs2.Stream
 
-class Aoc10[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
+class Aoc10[F[_]: Sync]( srcFile: String, live: Boolean ) extends Day.Of[F]( srcFile, live ) {
   import Aoc10._
 
   def getInstructions: Stream[F, Instr] =

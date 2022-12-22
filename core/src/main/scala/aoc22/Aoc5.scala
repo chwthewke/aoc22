@@ -9,7 +9,7 @@ import cats.parse.Parser
 import cats.parse.Parser0
 import cats.syntax.all._
 
-class Aoc5[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
+class Aoc5[F[_]: Sync]( srcFile: String, live: Boolean ) extends Day.Of[F]( srcFile, live ) {
   import Aoc5._
 
   private def readInstructions: F[Instructions] =
