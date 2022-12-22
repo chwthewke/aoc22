@@ -7,12 +7,7 @@ import cats.effect.Sync
 import cats.parse.Numbers
 import cats.parse.Parser
 import cats.parse.Parser0
-import cats.syntax.apply._
-import cats.syntax.either._
-import cats.syntax.foldable._
-import cats.syntax.functorFilter._
-import cats.syntax.flatMap._
-import cats.syntax.option._
+import cats.syntax.all._
 
 class Aoc5[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
   import Aoc5._

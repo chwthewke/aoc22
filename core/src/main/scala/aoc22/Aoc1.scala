@@ -2,7 +2,7 @@ package aoc22
 
 import cats.data.NonEmptyList
 import cats.effect.Sync
-import cats.syntax.show._
+import cats.syntax.all._
 import fs2.Stream
 
 class Aoc1[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {

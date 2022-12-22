@@ -1,9 +1,7 @@
 package aoc22
 
 import cats.effect.Sync
-import cats.syntax.foldable._
-import cats.syntax.flatMap._
-import cats.syntax.functor._
+import cats.syntax.all._
 import scala.annotation.tailrec
 
 class Aoc12[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {

@@ -4,13 +4,7 @@ import cats.effect.Clock
 import cats.effect.ExitCode
 import cats.effect.Sync
 import cats.effect.std.Console
-import cats.syntax.applicativeError._
-import cats.syntax.apply._
-import cats.syntax.flatMap._
-import cats.syntax.foldable._
-import cats.syntax.functor._
-import cats.syntax.semigroupk._
-import cats.syntax.show._
+import cats.syntax.all._
 import com.monovore.decline.Command
 import com.monovore.decline.Opts
 

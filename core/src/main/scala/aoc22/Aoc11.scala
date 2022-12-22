@@ -5,14 +5,7 @@ import cats.Show
 import cats.derived.semiauto
 import cats.effect.Sync
 import cats.parse.Parser
-import cats.syntax.apply._
-import cats.syntax.either._
-import cats.syntax.flatMap._
-import cats.syntax.foldable._
-import cats.syntax.functor._
-import cats.syntax.semigroup._
-import cats.syntax.show._
-import cats.syntax.traverse._
+import cats.syntax.all._
 import enumeratum.Enum
 import enumeratum.EnumEntry
 import scala.annotation.tailrec

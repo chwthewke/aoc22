@@ -1,6 +1,6 @@
 import cats.MonadThrow
 import cats.parse.Parser
-import cats.syntax.either._
+import cats.syntax.all._
 
 package object aoc22 {
   implicit class EitherStringOps[A]( private val self: Either[String, A] ) {

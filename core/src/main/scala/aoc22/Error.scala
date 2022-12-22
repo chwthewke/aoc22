@@ -5,9 +5,7 @@ import cats.Reducible
 import cats.Show
 import cats.data.NonEmptyChain
 import cats.kernel.Semigroup
-import cats.syntax.foldable._
-import cats.syntax.reducible._
-import cats.syntax.traverse._
+import cats.syntax.all._
 import fs2.Stream
 import fs2.Pure
 

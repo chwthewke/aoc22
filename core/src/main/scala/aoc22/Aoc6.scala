@@ -1,7 +1,7 @@
 package aoc22
 
 import cats.effect.Sync
-import cats.syntax.either._
+import cats.syntax.all._
 
 class Aoc6[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
   def uniquePacket( signal: String, from: Int, window: Int ): Option[Int] =

@@ -4,10 +4,7 @@ import cats.Order
 import cats.Order.catsKernelOrderingForOrder
 import cats.effect.Sync
 import cats.parse.Parser
-import cats.syntax.apply._
-import cats.syntax.either._
-import cats.syntax.foldable._
-import cats.syntax.functor._
+import cats.syntax.all._
 import fs2.Chunk
 
 class Aoc13[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {

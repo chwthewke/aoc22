@@ -4,10 +4,7 @@ import cats.Group
 import cats.effect.Sync
 import cats.kernel.CommutativeGroup
 import cats.parse.Parser
-import cats.syntax.apply._
-import cats.syntax.foldable._
-import cats.syntax.functor._
-import cats.syntax.group._
+import cats.syntax.all._
 import enumeratum.Enum
 import enumeratum.EnumEntry
 import fs2.Stream

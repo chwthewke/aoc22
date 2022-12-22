@@ -1,7 +1,7 @@
 package aoc22
 
 import cats.effect.Sync
-import cats.syntax.either._
+import cats.syntax.all._
 import cats.parse.Parser
 import fs2.Pipe
 import fs2.Stream

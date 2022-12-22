@@ -3,9 +3,7 @@ package aoc22
 import cats.effect.Sync
 import cats.parse.Numbers
 import cats.parse.Parser
-import cats.syntax.apply._
-import cats.syntax.foldable._
-import cats.syntax.functor._
+import cats.syntax.all._
 
 class Aoc7[F[_]: Sync]( srcFile: String ) extends Day.Of[F]( srcFile ) {
   import Aoc7._
