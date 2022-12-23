@@ -1,5 +1,6 @@
 package aoc22
 
+import cats.Parallel
 import cats.effect.Clock
 import cats.effect.ExitCode
 import cats.effect.Sync
@@ -55,7 +56,7 @@ object Days {
       new DescAlt[F]( dayNum, mkDay )
   }
 
-  def days[F[_]: Sync]: Vector[Desc[F]] = Vector(
+  def days[F[_]: Sync: Parallel]: Vector[Desc[F]] = Vector(
     Desc( 1, new Aoc1[F]( _, _ ) ),
     Desc( 2, new Aoc2[F]( _, _ ) ),
     Desc( 3, new Aoc3[F]( _, _ ) ),
@@ -70,17 +71,18 @@ object Days {
     Desc( 12, new Aoc12[F]( _, _ ) ),
     Desc( 13, new Aoc13[F]( _, _ ) ),
     Desc( 14, new Aoc14[F]( _, _ ) ),
-    Desc( 15, new Aoc15[F]( _, _ ) )
+    Desc( 15, new Aoc15[F]( _, _ ) ),
+    Desc( 16, new Aoc16[F]( _, _ ) )
   )
 
   private val liveOpt: Opts[Boolean] = Opts.flag( "live", "Use the live data", "l" ).orFalse
 
   private val altOpt: Opts[Boolean] = Opts.flag( "alt", "Use alt sample (ignored if --live)", "a" ).orFalse
 
-  private def commands[F[_]: Sync]: Opts[Boolean => F[String]] =
+  private def commands[F[_]: Sync: Parallel]: Opts[Boolean => F[String]] =
     days[F].foldMapK( _.commands )
 
-  def program[F[_]: Sync: Clock]: Opts[F[ExitCode]] =
+  def program[F[_]: Sync: Clock: Parallel]: Opts[F[ExitCode]] =
     ( liveOpt, commands[F] ).mapN( ( live, p ) => run( p( live ) ) )
 
   private def run[F[_]: Sync: Clock]( program: F[String] ): F[ExitCode] = {
