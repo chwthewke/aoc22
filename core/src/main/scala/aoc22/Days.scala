@@ -72,7 +72,8 @@ object Days {
     Desc( 13, new Aoc13[F]( _, _ ) ),
     Desc( 14, new Aoc14[F]( _, _ ) ),
     Desc( 15, new Aoc15[F]( _, _ ) ),
-    Desc( 16, new Aoc16[F]( _, _ ) )
+    Desc( 16, new Aoc16[F]( _, _ ) ),
+    Desc( 17, new Aoc17[F]( _, _ ) )
   )
 
   private val liveOpt: Opts[Boolean] = Opts.flag( "live", "Use the live data", "l" ).orFalse
@@ -95,7 +96,7 @@ object Days {
       e   <- Clock[F].monotonic
       _   <- console.errorln( show"[${(e - s).toMillis} ms]" )
       code <- res.fold(
-               err => console.errorln( err.getMessage ).as( ExitCode.Error ),
+               err => console.printStackTrace( err ).as( ExitCode.Error ),
                str => console.println( str ).as( ExitCode.Success )
              )
     } yield code

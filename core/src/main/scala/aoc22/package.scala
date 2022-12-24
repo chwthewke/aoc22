@@ -9,7 +9,7 @@ package object aoc22 {
   }
 
   final def liftF[F[_], A]( thunk: => Either[String, A] )( implicit F: Sync[F] ): F[A] =
-    F.interruptible( thunk ).flatMap( _.into[F] )
+    F.blocking( thunk ).flatMap( _.into[F] )
 
   final def formatError( src: String, err: Parser.Error ): String =
     s"Error parsing '$src': $err"
