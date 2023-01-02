@@ -27,7 +27,7 @@ object DependenciesPlugin extends AutoPlugin {
     val kittens: Deps       = Seq( "org.typelevel" %% "kittens" % "3.0.0" )
     val alleycatsCore: Deps = Seq( "org.typelevel" %% "alleycats-core" % catsVersion )
 
-    val catsEffect: Deps = "org.typelevel" %% Seq( "cats-effect-kernel", "cats-effect-std", "cats-effect" ) % "3.4.1"
+    val catsEffect: Deps = "org.typelevel" %% Seq( "cats-effect-kernel", "cats-effect-std", "cats-effect" ) % "3.4.4"
 
     val fs2: Deps = "co.fs2" %% Seq( "fs2-core", "fs2-io" ) % "3.4.0"
 
@@ -54,7 +54,7 @@ object DependenciesPlugin extends AutoPlugin {
       "org.scodec" %% "scodec-core" % "1.11.10"
     )
 
-    val catsParse: Deps = Seq( "org.typelevel" %% "cats-parse" % "0.3.7" )
+    val catsParse: Deps = Seq( "org.typelevel" %% "cats-parse" % "0.3.8" )
 
     val atto: Deps = Seq( "org.tpolecat" %% "atto-core" % "0.9.5" )
 
@@ -75,7 +75,7 @@ object DependenciesPlugin extends AutoPlugin {
     val ojAlgo: Deps = Seq( "org.ojalgo" % "ojalgo" % "52.0.1" )
 
     val enumeratum: Deps =
-      Seq( "com.beachape" %% "enumeratum" % "1.7.0", "com.beachape" %% "enumeratum-cats" % "1.7.0" )
+      Seq( "com.beachape" %% "enumeratum" % "1.7.2", "com.beachape" %% "enumeratum-cats" % "1.7.2" )
     val enumeratumCirce: Deps = Seq( "com.beachape" %% "enumeratum-circe" % "1.7.0" )
 
     val shapeless: Deps = Seq( "com.chuusai" %% "shapeless" % "2.3.10" )
@@ -104,7 +104,7 @@ object DependenciesPlugin extends AutoPlugin {
 
     private[DependenciesPlugin] val typesafeConfig: Deps = Seq( "com.typesafe" % "config" % "1.4.2" )
 
-    val decline: Deps = "com.monovore" %% Seq( "decline", "decline-effect" ) % "2.4.0"
+    val decline: Deps = "com.monovore" %% Seq( "decline", "decline-effect" ) % "2.4.1"
 
     val doobieVersion             = "0.13.4"
     val doobie: Deps              = "org.tpolecat" %% Seq( "doobie-core", "doobie-free" ) % doobieVersion
